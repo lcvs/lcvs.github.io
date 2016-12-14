@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="iOS," />
 
 
 
@@ -84,12 +84,16 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="黎叔的开发杂记">
-<meta property="og:url" content="http://blog.lichen.me/archives/2016/index.html">
+<meta name="description" content="导入SystemConfiguration.framework">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS获取WiFi名称及路由器Mac地址">
+<meta property="og:url" content="http://blog.lichen.me/iOS/get-wifi-name.html">
 <meta property="og:site_name" content="黎叔的开发杂记">
+<meta property="og:description" content="导入SystemConfiguration.framework">
+<meta property="og:updated_time" content="2016-08-29T03:10:06.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="黎叔的开发杂记">
+<meta name="twitter:title" content="iOS获取WiFi名称及路由器Mac地址">
+<meta name="twitter:description" content="导入SystemConfiguration.framework">
 
 
 
@@ -110,9 +114,9 @@
 
 
 
-  <link rel="canonical" href="http://blog.lichen.me/archives/2016/"/>
+  <link rel="canonical" href="http://blog.lichen.me/iOS/get-wifi-name.html"/>
 
-  <title> 归档 | 黎叔的开发杂记 </title>
+  <title> iOS获取WiFi名称及路由器Mac地址 | 黎叔的开发杂记 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -142,7 +146,7 @@
     
   
 
-  <div class="container one-collumn sidebar-position-left  page-archive  ">
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -245,66 +249,157 @@
           <div id="content" class="content">
             
 
-  <section id="posts" class="posts-collapse">
-    <span class="archive-move-on"></span>
-
-    <span class="archive-page-counter">
-      
-      
-      
-        
-      
-      嗯..! 目前共计 1 篇日志。 继续努力。
-    </span>
-
+  <div id="posts" class="posts-expand">
     
 
-      
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                iOS获取WiFi名称及路由器Mac地址
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2014-11-03T11:23:00+08:00" content="2014-11-03">
+              2014-11-03
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/iOS/" itemprop="url" rel="index">
+                    <span itemprop="name">iOS</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/iOS/get-wifi-name.html#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="iOS/get-wifi-name.html" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/iOS/get-wifi-name.html" class="leancloud_visitors" data-flag-title="iOS获取WiFi名称及路由器Mac地址">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
       
       
 
       
+        <p>导入SystemConfiguration.framework<br><a id="more"></a><br><figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#import <span class="meta-string">&lt;SystemConfiguration/CaptiveNetwork.h&gt;</span></span></div><div class="line"><span class="meta">#import <span class="meta-string">&lt;SystemConfiguration/SystemConfiguration.h&gt;</span></span></div><div class="line"></div><div class="line">- (<span class="built_in">NSString</span> *)getWiFiMac&#123;</div><div class="line">    <span class="built_in">NSString</span> *ssid = <span class="string">@"Not Found"</span>;</div><div class="line">    <span class="built_in">NSString</span> *mac = <span class="string">@"Not Found"</span>;</div><div class="line">    <span class="built_in">CFArrayRef</span> myArray = <span class="built_in">CNCopySupportedInterfaces</span>();</div><div class="line">    <span class="keyword">if</span> (myArray != <span class="literal">nil</span>) &#123;</div><div class="line">        <span class="built_in">CFDictionaryRef</span> myDict =<span class="built_in">CNCopyCurrentNetworkInfo</span>(<span class="built_in">CFArrayGetValueAtIndex</span>(myArray,<span class="number">0</span>));</div><div class="line">        <span class="keyword">if</span> (myDict != <span class="literal">nil</span>) &#123;</div><div class="line">            <span class="built_in">NSDictionary</span> *dict = (<span class="built_in">NSDictionary</span>*)<span class="built_in">CFBridgingRelease</span>(myDict);</div><div class="line">            ssid = [dict valueForKey:<span class="string">@"SSID"</span>];       <span class="comment">//WiFi名称</span></div><div class="line">            mac = [dict valueForKey:<span class="string">@"BSSID"</span>];       <span class="comment">//Mac地址</span></div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> mac;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+
+    <div>
+      
         
-        <div class="collection-title">
-          <h2 class="archive-year motion-element" id="archive-year-2016">2016</h2>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/iOS/" rel="tag">#iOS</a>
+          
         </div>
       
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/iOS/xcode-add-templates.html" rel="prev" title="为Xcode6及以后添加空工程等模板">
+                为Xcode6及以后添加空工程等模板 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
       
 
       
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h1 class="post-title">
-        
-            <a class="post-title-link" href="/iOS/hello-world.html" itemprop="url">
-              
-                <span itemprop="name">Hello World</span>
-              
-            </a>
-        
-      </h1>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2016-08-20T19:01:43+08:00"
-              content="2016-08-20" >
-          08-20
-        </time>
-      </div>
-
-    </header>
+      
+    </footer>
   </article>
 
 
 
-    
-
-  </section>
-
-  
-
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -312,6 +407,14 @@
 
 
           
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="iOS/get-wifi-name.html"
+           data-title="iOS获取WiFi名称及路由器Mac地址" data-url="http://blog.lichen.me/iOS/get-wifi-name.html">
+      </div>
+    
+  </div>
+
 
         </div>
         
@@ -331,8 +434,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel  sidebar-panel-active ">
+      <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/uploads/avatar.jpg"
@@ -343,7 +455,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">1</span>
+              <span class="site-state-item-count">2</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -382,6 +494,17 @@
 
       </section>
 
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+        </section>
       
 
     </div>
@@ -467,11 +590,9 @@
   
 
   
-  
-    <script type="text/javascript" id="motion.page.archive">
-      $('.archive-year').velocity('transition.slideLeftIn');
-    </script>
-  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
 
 
   
